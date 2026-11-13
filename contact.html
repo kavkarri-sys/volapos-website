@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<link rel="canonical" href="https://volapos.com/contact.html" />
+<title>Contact Us · VolaPos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta name="description" content="Contact VolaPos, call 01273 110 124, visit us at 1 Ridgeside Avenue, Brighton, BN1 8WD or book a demo online. Talk to our team about EPOS, payments, kiosks, online ordering or VolaVoice AI for your hospitality business.">
+<meta property="og:title" content="Contact Us · VolaPos">
+<meta property="og:description" content="Get in touch with the VolaPos team, phone, address and map. Based in Brighton, serving UK hospitality.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://volapos.com/contact.html">
+<meta property="og:image" content="https://volapos.com/assets/volapos-logo-full.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Contact Us · VolaPos">
+<meta name="twitter:description" content="Get in touch with the VolaPos team, phone, address and map. Based in Brighton, serving UK hospitality.">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LocalBusiness",
+      "@id": "https://volapos.com/#localbusiness",
+      "name": "VolaPos",
+      "legalName": "Volapos Ltd",
+      "description": "UK hospitality EPOS reseller, point of sale, payments, kiosks and online ordering for restaurants, takeaways, cafés and bars.",
+      "url": "https://volapos.com",
+      "image": "https://volapos.com/assets/volapos-logo-full.png",
+      "logo": "https://volapos.com/assets/volapos-logo-full.png",
+      "telephone": "+44 1273 110 124",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "1 Ridgeside Avenue",
+        "addressLocality": "Brighton",
+        "addressRegion": "England",
+        "postalCode": "BN1 8WD",
+        "addressCountry": "GB"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "09:00",
+          "closes": "17:30"
+        }
+      ],
+      "areaServed": {
+        "@type": "Country",
+        "name": "United Kingdom"
+      },
+      "knowsLanguage": "en-GB",
+      "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "Companies House",
+        "value": "17253174"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://volapos.com" },
+        { "@type": "ListItem", "position": 2, "name": "Contact", "item": "https://volapos.com/contact.html" }
+      ]
+    }
+  ]
+}
+</script>
+
+<style>
+  /* ── Contact page, built on existing design tokens ── */
+  .contact-grid{
+    display:grid;
+    grid-template-columns:0.95fr 1.05fr;
+    gap:48px;
+    align-items:stretch;
+  }
+  .contact-info{display:flex;flex-direction:column;gap:16px}
+  .contact-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--r-lg);
+    padding:26px 28px;
+    display:flex;
+    align-items:flex-start;
+    gap:18px;
+    transition:all 0.25s var(--t);
+  }
+  .contact-card:hover{
+    transform:translateY(-2px);
+    box-shadow:var(--shadow);
+    border-color:var(--line-2);
+  }
+  .contact-ico{
+    width:52px;height:52px;flex-shrink:0;
+    border-radius:14px;
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(140deg, var(--teal-soft) 0%, rgba(20,181,168,0.18) 100%);
+    border:1px solid rgba(31,143,132,0.18);
+    color:var(--teal);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,0.7), 0 4px 12px rgba(31,143,132,0.10);
+  }
+  .contact-ico svg{width:24px;height:24px;stroke-width:2}
+  .contact-card-body{min-width:0;flex:1}
+  .contact-k{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.66rem;letter-spacing:0.14em;text-transform:uppercase;
+    color:var(--muted);margin-bottom:7px;
+  }
+  .contact-v{
+    font-size:1.18rem;font-weight:600;letter-spacing:-0.015em;
+    color:var(--ink);line-height:1.3;
+  }
+  .contact-v a{color:var(--ink);transition:color 0.2s}
+  .contact-v a:hover{color:var(--teal)}
+  .contact-sub{font-size:0.9rem;color:var(--muted);margin-top:6px;line-height:1.5}
+  .contact-link{
+    display:inline-flex;align-items:center;gap:6px;
+    margin-top:10px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;
+    color:var(--teal);font-weight:600;
+  }
+  .contact-link:hover{color:var(--teal-2)}
+
+  .contact-map{
+    position:relative;
+    border:1px solid var(--line-2);
+    border-radius:var(--r-lg);
+    overflow:hidden;
+    min-height:480px;
+    box-shadow:var(--shadow-lg);
+    background:var(--surface-2);
+  }
+  .contact-map iframe{
+    position:absolute;inset:0;
+    width:100%;height:100%;border:0;display:block;
+    filter:grayscale(0.18) contrast(1.02);
+  }
+  .contact-map-tag{
+    position:absolute;left:16px;top:16px;z-index:2;
+    display:flex;align-items:center;gap:8px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.64rem;letter-spacing:0.1em;text-transform:uppercase;
+    color:var(--ink);
+    background:rgba(255,255,255,0.94);
+    border:1px solid var(--line-2);
+    border-radius:50px;
+    padding:7px 14px;
+    backdrop-filter:blur(6px);
+    box-shadow:var(--shadow-sm);
+  }
+  .contact-map-tag .pin{width:6px;height:6px;border-radius:50%;background:var(--teal)}
+
+  @media (max-width: 900px){
+    .contact-grid{grid-template-columns:1fr;gap:28px}
+    .contact-map{min-height:360px}
+  }
+</style>
+</head>
+<body data-screen-label="Contact">
+
+<div data-site-nav></div>
+
+<!-- ════════════════════════════════════════════════════ HEAD -->
+<section class="page-head">
+  <div class="container">
+    <div class="eyebrow" style="justify-content:center">Get in touch</div>
+    <h1>Let's talk <span style="background:linear-gradient(135deg,#00C8B9,#5EEEE6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-style:italic;font-weight:500;">hospitality</span>.</h1>
+    <p class="lead">Questions about EPOS, payments, kiosks, online ordering or VolaVoice AI? Call us, drop by the office or book a demo.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════ CONTACT + MAP -->
+<section style="padding-top:0">
+  <div class="container">
+    <div class="contact-grid">
+
+      <!-- INFO -->
+      <div class="contact-info">
+
+        <!-- ADDRESS -->
+        <div class="contact-card">
+          <div class="contact-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+          </div>
+          <div class="contact-card-body">
+            <div class="contact-k">Visit us</div>
+            <div class="contact-v">1 Ridgeside Avenue,<br>Brighton, England, BN1 8WD</div>
+            <a class="contact-link" href="https://www.google.com/maps/search/?api=1&query=1+Ridgeside+Avenue,+Brighton,+BN1+8WD" target="_blank" rel="noopener">
+              Get directions
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- PHONE -->
+        <div class="contact-card">
+          <div class="contact-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+          </div>
+          <div class="contact-card-body">
+            <div class="contact-k">Call us</div>
+            <div class="contact-v"><a href="tel:+441273110124">01273 110 124</a></div>
+            <div class="contact-sub">Mon–Fri · 09:00–17:30</div>
+          </div>
+        </div>
+
+        <!-- HOURS -->
+        <div class="contact-card">
+          <div class="contact-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/>
+              <polyline points="12 7 12 12 15.5 14"/>
+            </svg>
+          </div>
+          <div class="contact-card-body">
+            <div class="contact-k">Opening hours</div>
+            <div class="contact-v">Mon–Fri · 09:00–17:30</div>
+            <div class="contact-sub">UK based.</div>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="contact-card" style="background:var(--ink);border-color:var(--ink);align-items:center;justify-content:space-between;gap:20px">
+          <div class="contact-card-body">
+            <div class="contact-k" style="color:rgba(255,255,255,0.55)">Prefer to message?</div>
+            <div class="contact-v" style="color:#fff">Book a demo online</div>
+          </div>
+          <a class='btn btn-primary' href='/chatbot' style='background:#fff;color:var(--ink);border-color:#fff;flex-shrink:0'>
+            Start a chat
+            <span class="arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </a>
+        </div>
+
+      </div>
+
+      <!-- MAP -->
+      <div class="contact-map">
+        <div class="contact-map-tag"><span class="pin"></span>VolaPos · Brighton</div>
+        <iframe
+          title="Map showing 1 Ridgeside Avenue, Brighton, BN1 8WD"
+          src="https://www.google.com/maps?q=1%20Ridgeside%20Avenue%2C%20Brighton%2C%20BN1%208WD&z=17&output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen></iframe>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div data-site-footer></div>
+
+<script src="chrome.js"></script>
+<script>SiteChrome.init({ active:'contact' });</script>
+</body>
+</html>

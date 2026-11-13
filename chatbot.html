@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="canonical" href="https://volapos.com/chatbot.html" />
+<meta name="robots" content="noindex, follow" />
+<title>Book a Demo · VolaPos</title>
+<meta name="description" content="Tell us about your venue in two minutes and a VolaPos specialist will call you back with a free system recommendation and demo." />
+<meta property="og:title" content="Book a Demo · VolaPos" />
+<meta property="og:description" content="Two-minute conversation. Tell us your venue type and we'll spec the right hospitality system for you." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://volapos.com/chatbot.html" />
+<meta property="og:image" content="https://volapos.com/assets/dashboard-epos.png" />
+<meta property="og:site_name" content="VolaPos" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Book a Demo · VolaPos" />
+<meta name="twitter:description" content="Two-minute conversation. Tell us your venue type and we'll spec the right hospitality system for you." />
+<meta name="twitter:image" content="https://volapos.com/assets/dashboard-epos.png" />
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  /* ── CHAT SHELL ──────────────────────────────────────── */
+  .chat-page{
+    min-height:100vh;
+    padding:96px 0 60px;
+    display:flex;align-items:flex-start;justify-content:center;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 0%, rgba(31,143,132,0.08), transparent 60%),
+      linear-gradient(180deg, var(--bg) 0%, var(--surface-2) 100%);
+  }
+  .chat-wrap{
+    width:100%;max-width:1180px;
+    padding:0 32px;
+    display:grid;
+    grid-template-columns:280px 1fr;
+    gap:32px;
+  }
+  /* Side rail */
+  .chat-rail{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--r-lg);
+    padding:28px;
+    position:sticky;top:96px;
+    align-self:start;
+    box-shadow:var(--shadow-sm);
+  }
+  .rail-eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.66rem;letter-spacing:0.14em;text-transform:uppercase;
+    color:var(--teal);margin-bottom:18px;
+  }
+  .rail-h{font-size:1.5rem;font-weight:600;letter-spacing:-0.02em;line-height:1.1;margin-bottom:14px;color:var(--ink)}
+  .rail-p{font-size:0.92rem;color:var(--muted);line-height:1.55;margin-bottom:24px}
+  .rail-divider{height:1px;background:var(--line);margin:20px 0}
+  .rail-stage{
+    display:flex;flex-direction:column;gap:10px;
+  }
+  .stage-item{
+    display:flex;align-items:center;gap:12px;
+    font-size:0.88rem;
+    color:var(--dim);
+  }
+  .stage-item .dot{
+    width:22px;height:22px;border-radius:50%;
+    border:1.5px solid var(--line-2);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.66rem;color:var(--dim);font-weight:500;
+    background:var(--surface);
+    transition:all 0.25s var(--t);
+    flex-shrink:0;
+  }
+  .stage-item.done .dot{
+    background:var(--teal);border-color:var(--teal);color:#fff;
+  }
+  .stage-item.done{color:var(--ink)}
+  .stage-item.active{color:var(--teal);font-weight:600}
+  .stage-item.active .dot{
+    border-color:var(--teal);color:var(--teal);
+    background:var(--teal-soft);
+    animation:pulse 1.6s ease-in-out infinite;
+  }
+
+  .rail-sig{
+    margin-top:24px;padding-top:24px;
+    border-top:1px solid var(--line);
+    display:flex;align-items:center;gap:12px;
+  }
+  .agent-av{
+    width:40px;height:40px;border-radius:50%;
+    background:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Space Grotesk',sans-serif;font-weight:600;
+    color:#fff;font-size:0.85rem;
+    position:relative;
+    overflow:hidden;
+  }
+  .agent-av img{width:100%;height:100%;object-fit:cover}
+  .agent-av::after{
+    content:'';position:absolute;bottom:-1px;right:-1px;
+    width:11px;height:11px;border-radius:50%;
+    background:var(--green);
+    border:2px solid var(--surface);
+  }
+  .agent-meta{display:flex;flex-direction:column}
+  .agent-name{font-size:0.92rem;font-weight:600;color:var(--ink)}
+  .agent-role{font-family:'JetBrains Mono',monospace;font-size:0.66rem;color:var(--muted);letter-spacing:0.06em}
+
+  /* Chat window */
+  .chat-window{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--r-lg);
+    overflow:hidden;
+    box-shadow:var(--shadow-lg);
+    display:flex;flex-direction:column;
+    min-height:680px;max-height:calc(100vh, 140px);
+    position:relative;
+  }
+  .chat-head{
+    display:flex;align-items:center;gap:12px;
+    padding:14px 20px;
+    background:var(--surface-2);
+    border-bottom:1px solid var(--line);
+  }
+  .chat-head .dots{display:flex;gap:6px}
+  .chat-head .dots span{width:10px;height:10px;border-radius:50%}
+  .chat-head .dots span:nth-child(1){background:#ff5f56}
+  .chat-head .dots span:nth-child(2){background:#ffbd2e}
+  .chat-head .dots span:nth-child(3){background:#27c93f}
+  .chat-head-title{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;color:var(--muted);
+    letter-spacing:0.1em;text-transform:uppercase;
+    margin-left:auto;
+  }
+  .chat-head-title .live{color:var(--green);margin-right:8px;font-weight:600}
+
+  /* Body scroll area */
+  .chat-body{
+    flex:1;overflow-y:auto;
+    padding:32px 28px;
+    display:flex;flex-direction:column;gap:14px;
+    scroll-behavior:smooth;
+    background:var(--bg);
+  }
+  .chat-body::-webkit-scrollbar{width:6px}
+  .chat-body::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:3px}
+
+  /* Messages */
+  .msg{
+    display:flex;gap:12px;align-items:flex-end;
+    animation:slide-up 0.4s var(--t);
+    max-width:78%;
+  }
+  @keyframes slide-up{
+    from{opacity:0;transform:translateY(8px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+  .msg.bot{align-self:flex-start}
+  .msg.user{align-self:flex-end;flex-direction:row-reverse}
+  .msg-av{
+    width:32px;height:32px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Space Grotesk',sans-serif;font-size:0.7rem;font-weight:600;
+    flex-shrink:0;overflow:hidden;
+  }
+  .msg.bot .msg-av{
+    background:var(--ink);
+    color:#fff;
+  }
+  .msg.bot .msg-av img{width:100%;height:100%;object-fit:cover}
+  .msg.user .msg-av{
+    background:var(--teal-soft);color:var(--teal);
+    border:1px solid rgba(31,143,132,0.25);
+  }
+  .msg-bubble{
+    padding:13px 16px;
+    border-radius:16px;
+    font-size:0.95rem;
+    line-height:1.5;
+    position:relative;
+  }
+  .msg.bot .msg-bubble{
+    background:var(--surface);
+    border:1px solid var(--line);
+    color:var(--ink);
+    border-bottom-left-radius:4px;
+    box-shadow:var(--shadow-sm);
+  }
+  .msg.user .msg-bubble{
+    background:var(--ink);
+    color:#fff;
+    border-bottom-right-radius:4px;
+  }
+  .msg-bubble strong{color:var(--teal);font-weight:600}
+  .msg.user .msg-bubble strong{color:var(--teal-2)}
+  .msg-time{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.62rem;color:var(--dim);
+    margin-top:4px;
+  }
+  .msg.user .msg-time{text-align:right}
+
+  /* Typing indicator */
+  .typing{display:flex;gap:5px;padding:4px 0}
+  .typing span{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--teal);
+    animation:blink-dot 1.2s ease-in-out infinite;
+  }
+  .typing span:nth-child(2){animation-delay:0.15s}
+  .typing span:nth-child(3){animation-delay:0.3s}
+  @keyframes blink-dot{
+    0%,80%,100%{opacity:0.25;transform:translateY(0)}
+    40%{opacity:1;transform:translateY(-3px)}
+  }
+
+  /* Quick reply chips */
+  .quick-replies{
+    display:flex;flex-wrap:wrap;gap:8px;
+    align-self:flex-start;
+    padding-left:44px;
+    animation:slide-up 0.4s var(--t);
+  }
+  .qr{
+    padding:9px 16px;
+    background:var(--surface);
+    border:1.5px solid var(--line-2);
+    border-radius:50px;
+    font-size:0.88rem;font-weight:500;color:var(--ink);
+    cursor:pointer;
+    transition:all 0.2s var(--t);
+    font-family:'Space Grotesk',sans-serif;
+  }
+  .qr:hover{
+    background:var(--teal-soft);
+    border-color:var(--teal);
+    color:var(--teal);
+    transform:translateY(-1px);
+  }
+
+  /* Input */
+  .chat-input-row{
+    border-top:1px solid var(--line);
+    padding:14px 18px;
+    display:flex;gap:10px;align-items:center;
+    background:var(--surface);
+  }
+  .chat-prompt{
+    font-family:'JetBrains Mono',monospace;
+    color:var(--teal);font-size:1rem;font-weight:600;
+    flex-shrink:0;
+  }
+  .chat-input{
+    flex:1;background:transparent;border:none;outline:none;
+    color:var(--ink);font-family:'Space Grotesk',sans-serif;
+    font-size:0.98rem;
+  }
+  .chat-input::placeholder{color:var(--dim)}
+  .chat-send{
+    width:38px;height:38px;border-radius:50%;
+    background:var(--ink);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;flex-shrink:0;
+    transition:all 0.2s var(--t);
+  }
+  .chat-send:hover{background:var(--teal);transform:translateY(-1px)}
+  .chat-send:disabled{opacity:0.3;cursor:not-allowed}
+
+  /* Form variant (multi-field) */
+  .msg-form{
+    align-self:flex-start;padding-left:44px;
+    width:calc(78% + 10px);max-width:100%;
+    animation:slide-up 0.4s var(--t);
+  }
+  .form-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:22px;
+    box-shadow:var(--shadow-sm);
+  }
+  .form-card h4{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;
+    color:var(--teal);margin-bottom:18px;
+  }
+  .form-grid{display:grid;gap:14px}
+  .form-grid.two{grid-template-columns:1fr 1fr}
+  .field{display:flex;flex-direction:column;gap:6px}
+  .field label{
+    font-size:0.8rem;letter-spacing:0;
+    color:var(--ink);font-weight:500;
+  }
+  .field input,.field select,.field textarea{
+    background:var(--surface);
+    border:1.5px solid var(--line-2);
+    border-radius:10px;
+    padding:11px 14px;
+    color:var(--ink);font-family:'Space Grotesk',sans-serif;
+    font-size:0.95rem;outline:none;
+    transition:border-color 0.2s,box-shadow 0.2s;
+  }
+  .field input:focus,.field select:focus,.field textarea:focus{
+    border-color:var(--teal);box-shadow:0 0 0 4px var(--teal-soft);
+  }
+  .field textarea{resize:vertical;min-height:72px}
+  .field.invalid input,.field.invalid select{border-color:var(--red);box-shadow:0 0 0 4px rgba(193,59,59,0.1)}
+  .field-error{
+    font-size:0.78rem;color:var(--red);display:none;
+  }
+  .field.invalid .field-error{display:block}
+  .form-submit-row{
+    margin-top:18px;display:flex;justify-content:space-between;align-items:center;gap:12px;
+  }
+  .form-meta{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.66rem;color:var(--dim);
+    letter-spacing:0.04em;
+  }
+
+  /* Success state */
+  .success-card{
+    background:var(--surface);
+    border:1.5px solid var(--teal);
+    border-radius:16px;
+    padding:26px;
+    align-self:flex-start;
+    width:calc(78% + 10px);
+    margin-left:44px;
+    animation:slide-up 0.4s var(--t);
+    box-shadow:var(--shadow);
+  }
+  .success-head{
+    display:flex;align-items:center;gap:12px;margin-bottom:14px;
+  }
+  .success-icon{
+    width:38px;height:38px;border-radius:50%;
+    background:var(--teal);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .success-title{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:1.15rem;font-weight:600;letter-spacing:-0.015em;color:var(--ink);
+  }
+  .success-card p{font-size:0.95rem;color:var(--muted);line-height:1.55;margin-bottom:16px}
+  .success-card p strong{color:var(--ink)}
+  .summary{
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:16px;margin-bottom:18px;
+    display:flex;flex-direction:column;gap:8px;
+  }
+  .summary-row{display:flex;justify-content:space-between;gap:16px}
+  .summary-row .k{
+    font-family:'JetBrains Mono',monospace;
+    color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;font-size:0.66rem;
+  }
+  .summary-row .v{color:var(--ink);text-align:right;flex:1;word-break:break-word;font-size:0.88rem;font-weight:500}
+  .summary-row .v.teal{color:var(--teal)}
+  .success-foot{display:flex;gap:10px;flex-wrap:wrap}
+
+  /* Empty input lock during bot turn */
+  .chat-input-row.locked{opacity:0.4;pointer-events:none}
+
+  /* Mobile progress bar, shown instead of sidebar on small screens */
+  .mobile-progress{
+    display:none;
+    padding:10px 16px;
+    background:var(--surface-2);
+    border-bottom:1px solid var(--line);
+    align-items:center;
+    gap:10px;
+  }
+  .mobile-progress-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;
+    color:var(--muted);white-space:nowrap;flex-shrink:0;
+  }
+  .mobile-progress-track{
+    flex:1;height:4px;background:var(--line-2);border-radius:2px;overflow:hidden;
+  }
+  .mobile-progress-fill{
+    height:100%;background:var(--teal);border-radius:2px;
+    transition:width 0.4s var(--t);
+    width:14%;
+  }
+  .mobile-progress-step{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.65rem;color:var(--teal);font-weight:600;
+    white-space:nowrap;flex-shrink:0;
+  }
+  @media (max-width: 900px){
+    .mobile-progress{display:flex}
+    .chat-rail{display:none}
+  }
+</style>
+</head>
+<body data-screen-label="Chatbot">
+
+<div data-site-nav></div>
+
+<div class="chat-page">
+  <div class="chat-wrap">
+
+    <!-- ── SIDE RAIL ─────────────────────────────────── -->
+    <aside class="chat-rail">
+      <div class="rail-eyebrow">Vola Assistant</div>
+      <div class="rail-h">Two-minute<br>conversation.</div>
+      <div class="rail-p">Tell us about your venue. We'll spec the right system and book a free callback at a time that suits you.</div>
+
+      <div class="rail-divider"></div>
+
+      <div class="rail-eyebrow" style="margin-bottom:14px">Progress</div>
+      <ul class="rail-stage" id="stageList">
+        <li class="stage-item active" data-stage="venue"><span class="dot">1</span> Venue type</li>
+        <li class="stage-item" data-stage="size"><span class="dot">2</span> Operation size</li>
+        <li class="stage-item" data-stage="current"><span class="dot">3</span> Current setup</li>
+        <li class="stage-item" data-stage="pain"><span class="dot">4</span> Biggest pain</li>
+        <li class="stage-item" data-stage="modules"><span class="dot">5</span> What you need</li>
+        <li class="stage-item" data-stage="contact"><span class="dot">6</span> Your details</li>
+        <li class="stage-item" data-stage="done"><span class="dot">✓</span> Callback booked</li>
+      </ul>
+
+      <div class="rail-sig">
+        <div class="agent-av"><img src="assets/volapos-icon-light.png" alt="Vola Assistant"/></div>
+        <div class="agent-meta">
+          <span class="agent-name">Vola Assistant</span>
+          <span class="agent-role">AI · live now</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ── CHAT WINDOW ───────────────────────────────── -->
+    <main class="chat-window">
+
+      <div class="chat-head">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <div class="chat-head-title"><span class="live">● LIVE</span> vola.assistant ~ chat</div>
+      </div>
+
+      <!-- Mobile progress bar (hidden on desktop via CSS) -->
+      <div class="mobile-progress" id="mobileProgress">
+        <span class="mobile-progress-label">Step</span>
+        <div class="mobile-progress-track">
+          <div class="mobile-progress-fill" id="mobileProgressFill"></div>
+        </div>
+        <span class="mobile-progress-step" id="mobileProgressStep">1 / 6</span>
+      </div>
+
+      <div class="chat-body" id="chatBody"></div>
+
+      <form class="chat-input-row" id="chatForm">
+        <span class="chat-prompt">›</span>
+        <input
+          type="text"
+          class="chat-input"
+          id="chatInput"
+          placeholder="Type your reply…"
+          autocomplete="off"
+        />
+        <button type="submit" class="chat-send" id="chatSend" aria-label="Send">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"/>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          </svg>
+        </button>
+      </form>
+
+    </main>
+  </div>
+</div>
+
+<script src="chrome.js"></script>
+<script>SiteChrome.init({ active:'' });</script>
+<script src="chatbot.js"></script>
+</body>
+</html>
